@@ -1,7 +1,8 @@
-import React from "react";
+// import { redirect } from "next/navigation";
 
 const Page = () => {
-  return <div>This is a listed clone</div>;
+  // redirect("/random");
+  return <div className="bg-red-300">hello</div>;
 };
 
 export default Page;
