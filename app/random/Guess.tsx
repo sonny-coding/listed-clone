@@ -11,9 +11,9 @@ type GuessProps = {
 const Guess = ({ increaseNumGuess, updateUserGuess }: GuessProps) => {
   const [inputValue, setInputValue] = useState<string>("");
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInputValue(e.target.value);
+  // };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     increaseNumGuess();
@@ -26,7 +26,7 @@ const Guess = ({ increaseNumGuess, updateUserGuess }: GuessProps) => {
         placeholder="Make a guess..."
         className="w-full font-semibold bg-eggshell py-2 px-4 text-lg rounded-md placeholder:font-medium outline-none"
         onValueChange={(value, name, values) => {
-          console.log(value, name, values);
+          // console.log(value, name, values);
           setInputValue(value || "");
         }}
         prefix="$"

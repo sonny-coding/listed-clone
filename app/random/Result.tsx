@@ -1,18 +1,19 @@
 "use client";
 
 type ResultProps = {
+  numGuess: number;
   resetGame: () => void;
 };
 
-const Result = ({ resetGame }: ResultProps) => {
+const Result = ({ resetGame, numGuess }: ResultProps) => {
   return (
     <div className="text-center text-lg space-y-3 p-3 border-2 border-yellowish rounded-sm">
       <p>
         Sold for: <span className="font-bold">$400,000</span>
       </p>
       <p>
-        Persistent! You got Listed in
-        <span className="text-yellowish"> 7 guesses</span>
+        Persistent! You won this game in
+        <span className="text-yellowish">{` ${numGuess} guesses`}</span>
       </p>
       <button
         onClick={resetGame}

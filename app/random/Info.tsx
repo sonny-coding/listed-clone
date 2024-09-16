@@ -6,18 +6,20 @@ type InfoProps = {
     [key: string]: any;
   };
   numGuess: number;
+  isWon: boolean;
 };
 
-const Info = ({ property, numGuess }: InfoProps) => {
+const Info = ({ property, numGuess, isWon }: InfoProps) => {
+  const current = isWon ? 100 : numGuess;
   return (
     <div className="grid grid-cols-2 gap-2 text-sm text-text-fadedJay">
       <div>
         <p
           className={`${
-            numGuess < 1 && "blur-sm"
+            current < 1 && "blur-sm"
           } text-base font-semibold text-text-clay`}
         >
-          {numGuess >= 1
+          {current >= 1
             ? `${property.data[0].homeData.addressInfo.city}, ${property.data[0].homeData.addressInfo.state}`
             : "xxxxx, xx"}
         </p>
@@ -26,10 +28,10 @@ const Info = ({ property, numGuess }: InfoProps) => {
       <div>
         <p
           className={`${
-            numGuess < 2 && "blur-sm"
+            current < 2 && "blur-sm"
           } text-base font-semibold text-text-clay`}
         >
-          {numGuess >= 2 ? "Single Family Home" : "x"}
+          {current >= 2 ? "Single Family Home" : "x"}
         </p>
         <p>Property Type</p>
       </div>
@@ -37,32 +39,30 @@ const Info = ({ property, numGuess }: InfoProps) => {
         <div>
           <p
             className={`${
-              numGuess < 3 && "blur-sm"
+              current < 3 && "blur-sm"
             } text-base font-semibold text-text-clay`}
           >
-            {numGuess >= 3 ? property.data[0].homeData.beds : "x"}
+            {current >= 3 ? property.data[0].homeData.beds : "x"}
           </p>
           <p>Beds</p>
         </div>
         <div>
           <p
             className={`${
-              numGuess < 3 && "blur-sm"
+              current < 3 && "blur-sm"
             } text-base font-semibold text-text-clay`}
           >
-            {numGuess >= 3 ? property.data[0].homeData.baths : "x"}
+            {current >= 3 ? property.data[0].homeData.baths : "x"}
           </p>
           <p>Baths</p>
         </div>
         <div>
           <p
             className={`${
-              numGuess < 4 && "blur-sm"
+              current < 4 && "blur-sm"
             } text-base font-semibold text-text-clay duration-200`}
           >
-            {numGuess >= 4
-              ? property.data[0].homeData.yearBuilt.yearBuilt
-              : "x"}
+            {current >= 4 ? property.data[0].homeData.yearBuilt.yearBuilt : "x"}
           </p>
           <p>Built</p>
         </div>
@@ -71,20 +71,20 @@ const Info = ({ property, numGuess }: InfoProps) => {
         <div>
           <p
             className={`${
-              numGuess < 5 && "blur-sm"
+              current < 5 && "blur-sm"
             } text-base font-semibold text-text-clay`}
           >
-            {numGuess >= 5 ? property.data[0].homeData.sqftInfo.amount : "xxxx"}
+            {current >= 5 ? property.data[0].homeData.sqftInfo.amount : "xxxx"}
           </p>
           <p>Sqrft</p>
         </div>
         <div>
           <p
             className={`${
-              numGuess < 6 && "blur-sm"
+              current < 6 && "blur-sm"
             } text-base font-semibold text-text-clay`}
           >
-            {numGuess >= 6 ? property.data[0].homeData.lotSize.amount : "xxxx"}
+            {current >= 6 ? property.data[0].homeData.lotSize.amount : "xxxx"}
           </p>
           <p>Lot Size</p>
         </div>
@@ -103,10 +103,10 @@ const Info = ({ property, numGuess }: InfoProps) => {
         <div>
           <p
             className={`${
-              numGuess < 7 && "blur-sm"
+              current < 7 && "blur-sm"
             } text-base font-semibold text-text-clay`}
           >
-            {numGuess >= 7
+            {current >= 7
               ? convertDateTimeToMDY(
                   property.data[0].homeData.daysOnMarket.listingAddedDate
                 )
@@ -117,10 +117,10 @@ const Info = ({ property, numGuess }: InfoProps) => {
         <div>
           <p
             className={`${
-              numGuess < 8 && "blur-sm"
+              current < 8 && "blur-sm"
             } text-base font-semibold text-text-clay`}
           >
-            {numGuess >= 8
+            {current >= 8
               ? convertToCash(property.data[0].homeData.priceInfo.amount)
               : "xxxxxx"}
           </p>

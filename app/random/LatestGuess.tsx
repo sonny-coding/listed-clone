@@ -1,5 +1,12 @@
 import React from "react";
-import { ArrowUp, ArrowDown, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import {
+  ArrowUp,
+  ArrowDown,
+  ArrowUpRight,
+  ArrowDownRight,
+  Equal,
+  Smile,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -12,6 +19,17 @@ interface LatestGuessProps {
   correctPrice: string;
   guesses: string[];
   numGuess: number;
+}
+
+function formatCurrency(guess: string): string {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    // Add this line to ensure no fractions
+  });
+  return formatter.format(parseInt(guess));
 }
 
 const LatestGuess: React.FC<LatestGuessProps> = ({
@@ -29,17 +47,19 @@ const LatestGuess: React.FC<LatestGuessProps> = ({
     const priceDifference = Math.abs(guessNumber - correctPriceNumber);
     const percentageDifference = (priceDifference / correctPriceNumber) * 100;
 
-    if (percentageDifference <= 10) {
+    if (percentageDifference <= 5) {
+      return <Smile className="text-darkGreen" size={24} />;
+    } else if (percentageDifference <= 10) {
       return guessNumber > correctPriceNumber ? (
-        <ArrowDownRight className="text-yellow-500" size={24} />
+        <ArrowDownRight className="text-yellowish" size={24} />
       ) : (
-        <ArrowUpRight className="text-yellow-500" size={24} />
+        <ArrowUpRight className="text-yellowish" size={24} />
       );
     } else {
       return guessNumber > correctPriceNumber ? (
-        <ArrowDown className="text-red-500" size={24} />
+        <ArrowDown className="text-yellowish" size={24} />
       ) : (
-        <ArrowUp className="text-green-500" size={24} />
+        <ArrowUp className="text-yellowish" size={24} />
       );
     }
   };
@@ -49,24 +69,21 @@ const LatestGuess: React.FC<LatestGuessProps> = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="bg-gray-100 p-3 rounded-md cursor-pointer hover:bg-gray-200 transition-colors">
-          <h3 className="text-lg font-semibold mb-1">Latest Guess</h3>
-          <div className="flex items-center space-x-2">
-            <p className="text-xl font-bold text-blue-600">
-              {latestGuess
-                ? `Guess ${numGuess}: ${latestGuess}`
-                : "No guesses yet"}
-            </p>
-            {latestGuess && (
-              <div className="flex items-center">
-                <span className="mr-2">Next Guess:</span>
-                {getComparisonArrow(latestGuess)}
-              </div>
-            )}
-          </div>
+        <div className="rounded-sm hover:cursor-pointer flex items-center justify-center gap-7 p-2">
+          <p className="text-lg text-text-fadedJay">
+            {latestGuess
+              ? `Guess ${numGuess}: ${formatCurrency(latestGuess)}`
+              : "No guesses yet"}
+          </p>
+          {latestGuess && (
+            <div className="flex items-center gap-3">
+              <p className="">Next Guess:</p>
+              {getComparisonArrow(latestGuess)}
+            </div>
+          )}
         </div>
       </DialogTrigger>
-      <DialogContent className="bg-white">
+      <DialogContent className="bg-eggshell mx-auto scroll-auto max-h-[90%] overflow-y-scroll">
         <DialogHeader>
           <DialogTitle>Guess History</DialogTitle>
         </DialogHeader>
@@ -74,7 +91,7 @@ const LatestGuess: React.FC<LatestGuessProps> = ({
           {guesses.map((guess, index) => (
             <div key={index} className="flex items-center justify-between">
               <p className="text-lg">
-                Guess {index + 1}: {guess}
+                Guess {index + 1}: {formatCurrency(guess)}
               </p>
               <div className="flex items-center">
                 {/* <span className="mr-2">Next Guess:</span> */}

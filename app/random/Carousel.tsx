@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import * as React from "react";
+import { ChevronRight } from "lucide-react";
 
-// import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -9,21 +9,30 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 
 type CarouselImageType = {
   images: string[];
+  isWon: boolean;
+  propertyURL: string;
 };
 
-const CarouselImage = ({ images }: CarouselImageType) => {
+const CarouselImage = ({ images, isWon, propertyURL }: CarouselImageType) => {
   return (
     <Carousel className="w-full relative">
       <div className="rounded-sm p-1 absolute top-3 left-3 shadow-md bg-darkGreen text-white z-10">
         <p>Sold on 7/23/2024</p>
       </div>
-      <div className="rounded-sm p-1 absolute top-3 right-3 shadow-md bg-yellowish text-black z-10">
-        <p>See the listing</p>
-      </div>
+      {isWon && (
+        <a
+          target="_blank"
+          href={propertyURL}
+          className="rounded-sm p-1 absolute top-3 right-3 shadow-md bg-yellowish text-black z-10 flex items-center hover:opacity-90"
+        >
+          <span>See the listing</span>
+          <ChevronRight />
+        </a>
+      )}
       <CarouselContent className="">
         {images.map((imageUrl, index) => (
           <CarouselItem key={index} className="h-full relative">
