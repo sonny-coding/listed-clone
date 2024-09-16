@@ -17,10 +17,16 @@ type CarouselImageType = {
 
 const CarouselImage = ({ images }: CarouselImageType) => {
   return (
-    <Carousel className="w-full">
+    <Carousel className="w-full relative">
+      <div className="rounded-sm p-1 absolute top-3 left-3 shadow-md bg-darkGreen text-white z-10">
+        <p>Sold on 7/23/2024</p>
+      </div>
+      <div className="rounded-sm p-1 absolute top-3 right-3 shadow-md bg-yellowish text-black z-10">
+        <p>See the listing</p>
+      </div>
       <CarouselContent className="">
         {images.map((imageUrl, index) => (
-          <CarouselItem key={index} className="h-full">
+          <CarouselItem key={index} className="h-full relative">
             <div className="p-1 flex items-center justify-center h-[330px]">
               <img
                 src={imageUrl}
@@ -31,22 +37,6 @@ const CarouselImage = ({ images }: CarouselImageType) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      {/* <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem
-            key={index}
-            className="flex justify-center items-center"
-          >
-            <div className="p-1 w-full">
-              <Card className="h-[200px]">
-                <CardContent className="flex items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent> */}
       <CarouselPrevious />
       <CarouselNext />
     </Carousel>

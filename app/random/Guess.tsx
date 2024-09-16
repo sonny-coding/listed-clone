@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import CurrencyInput from "react-currency-input-field";
 
 type GuessProps = {
   increaseNumGuess: () => void;
@@ -8,7 +9,7 @@ type GuessProps = {
 };
 
 const Guess = ({ increaseNumGuess, updateUserGuess }: GuessProps) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -17,15 +18,19 @@ const Guess = ({ increaseNumGuess, updateUserGuess }: GuessProps) => {
     e.preventDefault();
     increaseNumGuess();
     updateUserGuess(inputValue);
+    setInputValue("");
   };
   return (
     <form className="flex w-full gap-3" onSubmit={handleSubmit}>
-      <input
-        type="text"
+      <CurrencyInput
+        placeholder="Make a guess..."
         className="w-full font-semibold bg-eggshell py-2 px-4 text-lg rounded-md placeholder:font-medium outline-none"
-        placeholder="Make a Guess..."
+        onValueChange={(value, name, values) => {
+          console.log(value, name, values);
+          setInputValue(value || "");
+        }}
+        prefix="$"
         value={inputValue}
-        onChange={handleInputChange}
       />
       <button
         type="submit"
