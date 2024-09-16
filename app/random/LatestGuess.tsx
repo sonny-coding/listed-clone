@@ -4,7 +4,6 @@ import {
   ArrowDown,
   ArrowUpRight,
   ArrowDownRight,
-  Equal,
   Smile,
 } from "lucide-react";
 import {

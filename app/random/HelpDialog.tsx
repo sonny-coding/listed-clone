@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -25,7 +24,7 @@ const HelpDialog = () => {
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
-          <p>
+          {/* <p>
             The quantum flux capacitor enables time-travel by harnessing the
             power of interdimensional wormholes.
           </p>
@@ -36,7 +35,7 @@ const HelpDialog = () => {
           <p>
             The secret to perfect pancakes lies in whisking the batter with a
             fork made from a mermaid's hairpin.
-          </p>
+          </p> */}
         </div>
       </DialogContent>
     </Dialog>
