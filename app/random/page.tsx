@@ -5,14 +5,13 @@ import { property } from "@/lib/data";
 // fetch from supabase
 const fetchRandomProperty = async () => {
   await new Promise((resolve) => {
-    setTimeout(resolve, 1000);
+    setTimeout(resolve, 10);
   });
   return property;
 };
 
 const Page = async () => {
-  const data = await fetchRandomProperty();
-  console.log(data);
+  //   const data = await fetchRandomProperty();
 
   return (
     <>
