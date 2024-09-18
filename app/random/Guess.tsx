@@ -21,7 +21,7 @@ const Guess = ({ increaseNumGuess, updateUserGuess }: GuessProps) => {
     setInputValue("");
   };
   return (
-    <form className="flex w-full gap-3" onSubmit={handleSubmit}>
+    <form className="flex w-full gap-2" onSubmit={handleSubmit}>
       <CurrencyInput
         placeholder="Make a guess..."
         className="w-full font-semibold bg-eggshell py-2 px-4 text-lg rounded-md placeholder:font-medium outline-none"
