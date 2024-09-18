@@ -15,12 +15,19 @@ type CarouselImageType = {
   images: string[];
   isWon: boolean;
   propertyURL: string;
+  numGuess: number;
 };
 
-const CarouselImage = ({ images, isWon, propertyURL }: CarouselImageType) => {
+const CarouselImage = ({
+  images,
+  isWon,
+  propertyURL,
+  numGuess,
+}: CarouselImageType) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [carouselApi, setCarouselApi] = React.useState<any>(null);
 
+  const numImages = Math.min(Math.max(numGuess, 1), images.length);
   React.useEffect(() => {
     if (!carouselApi) {
       return;
@@ -54,7 +61,7 @@ const CarouselImage = ({ images, isWon, propertyURL }: CarouselImageType) => {
         </a>
       )}
       <CarouselContent className="">
-        {images.map((imageUrl, index) => (
+        {images.slice(0, numImages).map((imageUrl, index) => (
           <CarouselItem key={index} className="h-full relative">
             <div className="p-1 flex items-center justify-center h-[330px]">
               <img
@@ -69,7 +76,7 @@ const CarouselImage = ({ images, isWon, propertyURL }: CarouselImageType) => {
       <CarouselPrevious />
       <CarouselNext />
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex justify-center mt-4 gap-2">
-        {images.map((_, index) => (
+        {images.slice(0, numImages).map((_, index) => (
           <Button
             key={index}
             variant="outline"

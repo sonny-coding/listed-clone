@@ -53,7 +53,12 @@ const Game = ({ property }: GameProps) => {
   return (
     <div className="max-w-xl mx-auto p-2 space-y-1">
       <Header />
-      <CarouselImage images={images} isWon={isWon} propertyURL={propertyURL} />
+      <CarouselImage
+        numGuess={numGuess}
+        images={images}
+        isWon={isWon}
+        propertyURL={propertyURL}
+      />
       <Info property={property} numGuess={numGuess} isWon={isWon} />
       <LatestGuess
         correctPrice="400000"
