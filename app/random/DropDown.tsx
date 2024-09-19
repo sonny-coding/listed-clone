@@ -26,14 +26,9 @@ export function DropDown() {
         align="start"
         className="w-60 border-2 border-yellowish rounded-sm text-3xl text-horizon p-1"
       >
-        {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
-
-        {/* <DropdownMenuItem className="text-2xl font-semibold py-6 px-4 hover:bg-white">
-          GitHub
-        </DropdownMenuItem> */}
         <DropdownMenuItem className="p-0 transition-none">
           <Link
-            href={"/"}
+            href={"/regions/all"}
             className="text-lg font-semibold py-4 px-4 hover:bg-horizon w-full hover:text-white"
           >
             Random Game
@@ -42,17 +37,12 @@ export function DropDown() {
         <DropdownMenuSeparator />
         <DropdownMenuItem className="p-0 transition-none">
           <Link
-            href={"/"}
+            href={"/regions/6_14240"}
             className="text-lg font-semibold py-4 px-4 hover:bg-horizon w-full hover:text-white"
           >
             Phoenix
           </Link>
         </DropdownMenuItem>
-        {/* <DropdownMenuSeparator /> */}
-        {/* <DropdownMenuItem>
-          About
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
