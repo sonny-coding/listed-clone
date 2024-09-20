@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { fetchRandomProperty } from "@/app/regions/[id]/page";
+import { fetchRandomProperty } from "@/lib/utils";
 
 export async function GET(request: NextRequest) {
   const regionId = request.nextUrl.searchParams.get("query");
