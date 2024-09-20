@@ -15,28 +15,27 @@ datasource db {
 }
 
 model Post {
-  id      String   @id @default(cuid())
-  name    String
+  id   String @id @default(cuid())
+  name String
 }
 
-
 model Property {
-  id           String   @id @default(cuid())
-  url          String    
-  beds         Int
-  baths        Float
-  yearBuilt    Int
-  city         String
-  state        String
-  zip          String
-  hoaDues      String
-  regionId     String
-  sqrft        String
-  lotSize      String
-  propertyType Int
-  price        String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  listDate     DateTime
-  lastSoldDate DateTime
+  id           String    @id @default(cuid())
+  url          String?
+  beds         Int?
+  baths        Float?
+  yearBuilt    Int?
+  city         String?
+  state        String?
+  zip          String?
+  hoaDues      String?
+  regionId     String?
+  sqrft        String?
+  lotSize      String?
+  propertyType Int?
+  price        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  listDate     DateTime?
+  lastSoldDate DateTime?
 }

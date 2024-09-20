@@ -16,6 +16,7 @@ type CarouselImageType = {
   isWon: boolean;
   propertyURL: string;
   numGuess: number;
+  soldOn: string;
 };
 
 const CarouselImage = ({
@@ -23,6 +24,7 @@ const CarouselImage = ({
   isWon,
   propertyURL,
   numGuess,
+  soldOn,
 }: CarouselImageType) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [carouselApi, setCarouselApi] = React.useState<any>(null);
@@ -48,7 +50,7 @@ const CarouselImage = ({
   return (
     <Carousel className="w-full relative" setApi={setCarouselApi}>
       <div className="rounded-sm p-1 absolute top-3 left-3 shadow-md bg-darkGreen text-white z-10">
-        <p>Sold on 7/23/2024</p>
+        <p>{`Sold on ${soldOn}`}</p>
       </div>
       {isWon && (
         <a

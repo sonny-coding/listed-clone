@@ -1,49 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { mockApiData } from "@/lib/data";
-
-// const fetchPosts = async () => {
-//   const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-//   if (!response.ok) {
-//     throw new Error(`HTTP error! status: ${response.status}`);
-//   }
-//   return await response.json();
-// };
-
-// PHOENIX: 6_14240
-// const seed = async () => {
-//   try {
-//     console.log("Starting to fetch posts from JSONPlaceholder...");
-//     const posts = await fetchPosts();
-//     console.log(`Fetched ${posts.length} posts`);
-
-//     // Clean up existing posts (optional)
-//     await prisma.post.deleteMany();
-//     console.log("Deleted existing posts");
-
-//     // Prepare data for createMany
-//     const postData = posts.slice(30).map((post: { title: any }) => ({
-//       name: post.title, // Assuming 'name' in your schema corresponds to 'title' in JSONPlaceholder
-//     }));
-
-//     // Create new posts
-//     await prisma.post.createMany({
-//       data: postData,
-//     });
-
-//     console.log(`Seeded ${posts.length} posts successfully`);
-//   } catch (error) {
-//     console.error("Error seeding database:", error);
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// };
-
-// seed();
-
-// import mock data
-// delete old data
-// prepare data for createMany
-// create new listings
+// import { mockApiData } from "@/lib/data";
 
 const seedListings = async (region: string, limit: string, apiKey: string) => {
   const fetchListings = async () => {
@@ -66,8 +22,8 @@ const seedListings = async (region: string, limit: string, apiKey: string) => {
     console.log("Starting to fetch data from redfin...");
     console.log(`Fetched ${listings.data.length} listings`);
 
-    await prisma.property.deleteMany();
-    console.log("Deleted existing listings");
+    // await prisma.property.deleteMany();
+    // console.log("Deleted existing listings");
 
     // prepare for createMany
     const listingData = listings.data.map((listing: any) => ({
@@ -78,10 +34,10 @@ const seedListings = async (region: string, limit: string, apiKey: string) => {
       city: listing.homeData.addressInfo.city,
       state: listing.homeData.addressInfo.state,
       zip: listing.homeData.addressInfo.zip,
-      hoaDues: listing.homeData.hoaDues.amount || "0",
+      hoaDues: listing.homeData.hoaDues.amount,
       regionId: region,
-      sqrft: listing.homeData.sqftInfo.amount || "0",
-      lotSize: listing.homeData.lotSize.amount || "0",
+      sqrft: listing.homeData.sqftInfo.amount,
+      lotSize: listing.homeData.lotSize.amount,
       propertyType: listing.homeData.listingMetadata.listingType,
       price: listing.homeData.priceInfo.amount,
       listDate: listing.homeData.daysOnMarket.listingAddedDate,
@@ -101,4 +57,9 @@ const seedListings = async (region: string, limit: string, apiKey: string) => {
   }
 };
 
-seedListings("6_14240", "20", process.env.X_RAPIDAPI_KEY as string);
+/* 
+6_14240 phoenix
+6_8903 houston
+6_11203 la
+*/
+seedListings("6_14240", "100", process.env.X_RAPIDAPI_KEY as string);

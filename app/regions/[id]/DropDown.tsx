@@ -43,6 +43,24 @@ export function DropDown() {
             Phoenix
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="p-0 transition-none">
+          <Link
+            href={"/regions/6_11203"}
+            className="text-lg font-semibold py-4 px-4 hover:bg-horizon w-full hover:text-white"
+          >
+            Los Angeles
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="p-0 transition-none">
+          <Link
+            href={"/regions/6_8903"}
+            className="text-lg font-semibold py-4 px-4 hover:bg-horizon w-full hover:text-white"
+          >
+            Houston
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

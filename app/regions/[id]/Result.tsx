@@ -3,13 +3,14 @@
 type ResultProps = {
   numGuess: number;
   resetGame: () => void;
+  correctPrice: string;
 };
 
-const Result = ({ resetGame, numGuess }: ResultProps) => {
+const Result = ({ resetGame, numGuess, correctPrice }: ResultProps) => {
   return (
     <div className="text-center text-lg space-y-3 p-3 border-2 border-yellowish rounded-sm">
       <p>
-        Sold for: <span className="font-bold">$400,000</span>
+        Sold for: <span className="font-bold">${correctPrice}</span>
       </p>
       <p>
         Persistent! You won this game in

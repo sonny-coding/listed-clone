@@ -1,10 +1,6 @@
 import React from "react";
-import Game from "@/app/random/Game";
-import { property } from "@/lib/data";
+import Game from "@/app/regions/[id]/Game";
 import { prisma } from "@/lib/prisma";
-
-// fetch from supabase
-const fetchRandomProperty = async () => {};
 
 type PageProps = {
   params: {
@@ -12,48 +8,39 @@ type PageProps = {
   };
 };
 
-interface Property {
-  id: string;
-  url: string;
-  beds: number;
-  baths: number;
-  yearBuilt: number;
-  city: string;
-  state: string;
-  zip: string;
-  hoaDues: string;
-  area: string;
-  sqrft: string;
-  lotSize: string;
-  propertyType: number;
-  price: number;
-  regionId: string;
-  // Add any other fields from your schema
-}
+export const fetchRandomProperty = async (regionId?: string) => {
+  let whereClause = {};
 
-const fetchProperties = async (regionId?: string) => {
-  const whereClause = regionId ? { regionId } : undefined;
-  const properties = await prisma.property.findMany({
+  // If regionId is provided and not 'all', use it in the where clause
+  if (regionId && regionId !== "all") {
+    whereClause = { regionId };
+  }
+
+  // Count total properties based on the where clause
+  const totalCount = await prisma.property.count({ where: whereClause });
+
+  if (totalCount === 0) {
+    return null; // No properties found
+  }
+
+  // Generate a random skip value
+  const randomSkip = Math.floor(Math.random() * totalCount);
+
+  // Fetch a random property
+  const randomProperty = await prisma.property.findFirst({
     where: whereClause,
-    take: 20, // Fetch more records to ensure randomness
+    skip: randomSkip,
   });
-  const shuffledProperties = properties.sort(() => Math.random() - 0.5);
-  return shuffledProperties.slice(0, 10);
+
+  return randomProperty;
 };
-
 const Page = async ({ params }: PageProps) => {
-  const regionId = params.id === "6_14240" ? params.id : undefined;
-
-  const properties = await fetchProperties(regionId);
+  const regionId = params.id;
+  const property = await fetchRandomProperty(regionId);
   return (
     <>
-      {/* <Game property={property} />; */}
-      <ul>
-        {properties.map((each) => {
-          return <li key={each.id}>{each.url}</li>;
-        })}
-        {properties.length}
-      </ul>
+      <Game initialProperty={property} regionId={regionId} />
+      {/* <p>{property?.price}</p> */}
     </>
   );
 };
