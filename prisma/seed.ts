@@ -28,7 +28,7 @@ const seedListings = async (region: string, limit: string, apiKey: string) => {
     // prepare for createMany
     const listingData = listings.data.map((listing: any) => ({
       url: listing.homeData.url,
-      beds: listing.homeData.baths,
+      beds: listing.homeData.beds,
       baths: listing.homeData.baths,
       yearBuilt: listing.homeData.yearBuilt.yearBuilt,
       city: listing.homeData.addressInfo.city,

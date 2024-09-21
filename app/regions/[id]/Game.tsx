@@ -6,9 +6,14 @@ import Info from "./Info";
 import Guess from "./Guess";
 import Result from "./Result";
 import { houseData } from "@/lib/data";
-import { convertDateTimeToMDY, extractURL } from "@/lib/utils";
+import {
+  convertDateTimeToMDY,
+  extractURL,
+  fetchPropertyImages,
+} from "@/lib/utils";
 import LatestGuess from "./LatestGuess";
-import { prisma } from "@/lib/prisma";
+import { Photo } from "@/type/types";
+// import { prisma } from "@/lib/prisma";
 
 type Property = {
   id: string;
@@ -40,23 +45,52 @@ const Game = ({ initialProperty, regionId }: GameProps) => {
   const [isWon, setIsWon] = useState(false);
   const [userGuesses, setUserGuesses] = useState<string[]>([]);
   const [property, setProperty] = useState(initialProperty);
+  const [images, setImages] = useState<Photo[] | null>(null);
 
+  console.log(process.env.X_RAPID_KEY);
   const soldOn = property?.lastSoldDate
     ? convertDateTimeToMDY(property.lastSoldDate.toString())
     : "--/--/----";
 
   console.log(soldOn);
-  const propertyURL = `https://www.redfin.com${property?.url}`;
+  const propertyURL =
+    property?.url ??
+    (`https://www.redfin.com${property?.url}` || "https://www.redfin.com");
+
+  useEffect(() => {
+    const fetchPropertyImages = async (url: string) => {
+      const rapidApiKey = process.env.NEXT_PUBLIC_X_RAPIDAPI_KEY;
+
+      if (!rapidApiKey) {
+        throw new Error(
+          "RAPID_API_KEY is not defined in environment variables"
+        );
+      }
+      const res = await fetch(
+        `https://redfin-com-data.p.rapidapi.com/property/detail-photos?url=${url}`,
+        {
+          headers: {
+            "x-rapidapi-key": rapidApiKey,
+            "x-rapidapi-host": "redfin-com-data.p.rapidapi.com",
+          },
+        }
+      );
+      const data = await res.json();
+      console.log("🚀 ~ fetchPropertyImages ~ data:", data);
+      const list: Photo[] = data.data;
+      setImages(list);
+    };
+
+    fetchPropertyImages(propertyURL);
+  }, [property, propertyURL]);
 
   const increaseNumGuess = async () => {
     setNumGuess((prev) => {
       return prev + 1;
-      // return newNumGuess;
     });
   };
 
   const updateUserGuess = (newGuess: string) => {
-    // const TRUEPRICE = "400000";
     setUserGuesses((prevGuesses) => [...prevGuesses, newGuess]);
     const guess = parseInt(newGuess);
     const lowerBound = parseInt(property?.price as string) * 0.95;
@@ -78,23 +112,23 @@ const Game = ({ initialProperty, regionId }: GameProps) => {
   }
 
   const resetGame = async () => {
-    // TODO: refetch data here
     setNumGuess(0);
     setIsWon(false);
     setUserGuesses([]);
     fetchRandomProperty(regionId);
   };
-  const images = extractURL(houseData.data);
   return (
     <div className="max-w-xl mx-auto p-2 space-y-1">
       <Header />
-      <CarouselImage
-        soldOn={soldOn}
-        numGuess={numGuess}
-        images={images}
-        isWon={isWon}
-        propertyURL={propertyURL}
-      />
+      {images && (
+        <CarouselImage
+          soldOn={soldOn}
+          numGuess={numGuess}
+          images={images}
+          isWon={isWon}
+          propertyURL={property?.url as string}
+        />
+      )}
       <Info property={property} numGuess={numGuess} isWon={isWon} />
       <LatestGuess
         correctPrice={property?.price as string}

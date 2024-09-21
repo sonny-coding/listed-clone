@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import * as React from "react";
 import { ChevronRight } from "lucide-react";
-
 import {
   Carousel,
   CarouselContent,
@@ -10,9 +9,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
+import { Photo } from "@/type/types";
 
 type CarouselImageType = {
-  images: string[];
+  images: Photo[];
   isWon: boolean;
   propertyURL: string;
   numGuess: number;
@@ -29,7 +29,11 @@ const CarouselImage = ({
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [carouselApi, setCarouselApi] = React.useState<any>(null);
 
-  const numImages = Math.min(Math.max(numGuess, 1), images.length);
+  // const numImages = Math.min(Math.max(numGuess, 1), images.length);
+  const numImages = !isWon
+    ? Math.min(Math.max(numGuess, 1))
+    : Math.min(images.length, 15);
+
   React.useEffect(() => {
     if (!carouselApi) {
       return;
@@ -55,19 +59,20 @@ const CarouselImage = ({
       {isWon && (
         <a
           target="_blank"
-          href={propertyURL}
+          href={`https://www.redfin.com${propertyURL}`}
           className="rounded-sm p-1 absolute top-3 right-3 shadow-md bg-yellowish text-black z-10 flex items-center hover:opacity-90"
         >
           <span>See the listing</span>
           <ChevronRight />
         </a>
       )}
+
       <CarouselContent className="">
-        {images.slice(0, numImages).map((imageUrl, index) => (
+        {images.slice(0, numImages).map((images, index) => (
           <CarouselItem key={index} className="h-full relative">
             <div className="p-1 flex items-center justify-center h-[330px]">
               <img
-                src={imageUrl}
+                src={images.photoUrls.nonFullScreenPhotoUrl}
                 alt={`Slide ${index + 1}`}
                 className="w-full h-full"
               />

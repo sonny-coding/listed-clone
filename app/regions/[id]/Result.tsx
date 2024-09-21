@@ -10,7 +10,14 @@ const Result = ({ resetGame, numGuess, correctPrice }: ResultProps) => {
   return (
     <div className="text-center text-lg space-y-3 p-3 border-2 border-yellowish rounded-sm">
       <p>
-        Sold for: <span className="font-bold">${correctPrice}</span>
+        Sold for:{" "}
+        <span className="font-bold">
+          $
+          {`${Number(correctPrice).toLocaleString("en-US", {
+            // minimumFractionDigits: 2,
+            // maximumFractionDigits: 2,
+          })}`}
+        </span>
       </p>
       <p>
         Persistent! You won this game in

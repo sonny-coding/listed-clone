@@ -91,3 +91,22 @@ export const fetchRandomProperty = async (regionId?: string) => {
 
   return randomProperty;
 };
+
+export const fetchPropertyImages = async (url: string) => {
+  const rapidApiKey = process.env.RAPID_API_KEY;
+
+  if (!rapidApiKey) {
+    throw new Error("RAPID_API_KEY is not defined in environment variables");
+  }
+  const res = await fetch("https://", {
+    headers: {
+      "X-RapidAPI-Key": rapidApiKey,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
+
+  return res.json();
+};
