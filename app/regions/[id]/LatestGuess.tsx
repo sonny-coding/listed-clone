@@ -69,13 +69,13 @@ const LatestGuess: React.FC<LatestGuessProps> = ({
     <Dialog>
       <DialogTrigger asChild>
         <div className="rounded-sm hover:cursor-pointer flex items-center justify-center gap-7 p-2">
-          <p className="text-lg text-text-fadedJay">
+          <p className="md:text-lg text-text-fadedJay">
             {latestGuess
               ? `Guess ${numGuess}: ${formatCurrency(latestGuess)}`
               : "No guesses yet"}
           </p>
           {latestGuess && (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 md:gap-3 text-text-fadedJay">
               <p className="">Next Guess:</p>
               {getComparisonArrow(latestGuess)}
             </div>
